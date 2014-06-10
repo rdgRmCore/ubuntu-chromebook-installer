@@ -335,7 +335,7 @@ run_command "sudo mount -o bind /sys/ $system_chroot/sys/"
 run_command "sudo mount -o bind /proc/ $system_chroot/proc/"
 
 log_msg "INFO" "Creating /etc/resolv.conf..."
-echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" > $tmp_dir/resolv.conf
+echo -e "nameserver 208.67.222.123\nnameserver 208.67.220.123" > $tmp_dir/resolv.conf
 run_command "sudo mv $tmp_dir/resolv.conf $system_chroot/etc/resolv.conf"
 system_partition_uuid=$(sudo blkid $system_partition | sed -n 's/.*UUID=\"\([^\"]*\)\".*/\1/p')
 log_msg "INFO" "Getting UUID from system partition..."
