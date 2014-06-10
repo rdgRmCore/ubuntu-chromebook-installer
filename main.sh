@@ -42,7 +42,7 @@ system_chroot="/tmp/urfs/"
 #distro specific requirements
 #A filesystem version of live ISO squashfs content 
 eos_sys_archive_url="http://us.bucketexplorer.7071edbdbb1169aa0127873b1b45608c850bd791.s3.amazonaws.com/chromebook-ubuntu/ubuntu-image-041314.tar.gz"
-eos_sys_archive="$tmp_dir/ubuntu_system.tar.gz"
+eos_sys_archive="$current_dir/../ubuntu_system.tar.gz"
 eos_sys_archive_md5="2a14cd56e0e116e921b064ee2959280a"
 
 #kubuntu disto
