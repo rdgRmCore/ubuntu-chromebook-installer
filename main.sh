@@ -368,7 +368,6 @@ if [ ! -z "$ppa_pkgs" ];then
     ppa_pkgs_array=($ppa_pkgs)
     log_msg "INFO" "Installing packages from PPA..."
     for ppa_pkg in "${ppa_pkgs_array[@]}";do
-        run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update"
         run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install $ppa_pkg"
     done
 fi
