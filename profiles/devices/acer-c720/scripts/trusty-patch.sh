@@ -34,7 +34,7 @@ if m:
     print int1+c1+int2+c2+int3+signed_int1+c3+word1
 END
 )
-#mykern=3.13.0-23-generic
+mykern=3.13.0-24-generic
 mykernver=linux-$(echo $mykern | cut -d'-' -f 1)
 
 
