@@ -4,6 +4,8 @@
 #Variables definition
 #Script variables
 current_dir="$(dirname $BASH_SOURCE)"
+echo "Current dir = $current_dir"
+
 verbose=0
 kubuntu_toggle=0
 
@@ -324,6 +326,7 @@ if [ -e "$device_scripts_dir" ];then
     log_msg "INFO" "Copying device scripts to $chroot_dir_scripts..."
     run_command "mkdir -p $chroot_dir_scripts"
     run_command "sudo cp -Rvu $device_scripts_dir/. $chroot_dir_scripts"
+    run_command "sudo cp $current_dir/../linux-3.13.0.tar.gz $chroot_dir_scripts"
 else
     log_msg "INFO" "No device scripts found...skipping"
 fi
