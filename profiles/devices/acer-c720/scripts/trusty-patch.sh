@@ -42,7 +42,10 @@ mykernver=linux-$(echo $mykern | cut -d'-' -f 1)
 sudo apt-get build-dep -y --no-install-recommends linux-image-$mykern
 
 # Grab Ubuntu kernel source
-apt-get source linux-image-$mykern
+# apt-get source linux-image-$mykern
+current_dir="$(dirname $BASH_SOURCE)"
+echo "Using kernel source archive from $current_dir/$mykernver.tar.gz"
+tar xzf $current_dir/$mykernver.tar.gz
 cd $mykernver
 
 if [ -f drivers/platform/x86/chromeos_laptop.c ]; then
