@@ -24,6 +24,7 @@ wget -O ruby-install-0.4.3.tar.gz https://github.com/postmodern/ruby-install/arc
 tar -xzf ruby-install-0.4.3.tar.gz
 cd ruby-install-0.4.3/
 make install
+cd $tempbuild
 touch "ruby-install.done"
 
 echo "Installing ruby"
@@ -41,6 +42,7 @@ echo "" >> /etc/skel/.bashrc
 echo "source '/usr/local/share/chruby/chruby.sh'" >> /etc/skel/.bashrc
 echo "source '/usr/local/share/chruby/auto.sh'" >> /etc/skel/.bashrc
 echo "chruby ruby-2.1.2" >> /etc/skel/.bashrc
+cd $tempbuild
 touch "chruby.done"
 
 echo "Installing node.js"
@@ -60,9 +62,42 @@ export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install minecraft-installer
 touch "minecraft.done"
 
-echo "Tweak Launcher Favorites"
-gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'application://nautilus.desktop', 'application://google-chrome.desktop', 'application://sublime_text.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']"
-touch "launcher-tweaks.done"
+echo "Installing Git"
+cd $tempbuild
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install git
+touch "git.done"
+
+echo "Installing Vim"
+cd $tempbuild
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install vim
+touch "vim.done"
+
+echo "Installing Emacs"
+cd $tempbuild
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install emacs
+touch "emacs.done"
+
+echo "Installing wallpaper"
+cd $tempbuild
+wget https://s3-us-west-1.amazonaws.com/mojombo-codestarter/codestarter-tree.png
+cp codestarter-tree.png /usr/share/backgrounds
+echo "wallpaper.done"
+
+echo "Installing dconf overrides"
+cd $tempbuild
+echo -e "[com.canonical.Unity.Launcher]\n\
+\n\
+favorites=['application://ubiquity.desktop', 'application://nautilus.desktop', 'application://google-chrome.desktop', 'application://sublime_text.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']
+\n\
+[org.gnome.settings-daemon.peripherals.touchpad]\n\
+\n\
+natural-scroll=true\n\
+\n\
+[org.gnome.desktop.background]\n\
+\n\
+picture-uri='file:///usr/share/backgrounds/codestarter-tree.png'" > /usr/share/glib-2.0/schemas/codestarter.gschema.override
+glib-compile-schemas /usr/share/glib-2.0/schemas/
+touch "dconf-overrides.done"
 
 # Cleanup
 rm -fr /tmp/tmp.*
