@@ -28,4 +28,4 @@ if m:
     print int1+c1+int2+c2+int3+signed_int1+c3+word1
 END
 )
-sudo apt-get install --reinstall linux-image-3.13.0-24-generic
+sudo apt-get install --reinstall linux-image-3.13.0-29-generic
