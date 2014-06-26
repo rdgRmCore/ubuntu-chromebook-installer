@@ -79,7 +79,7 @@ touch "emacs.done"
 
 echo "Installing wallpaper"
 cd $tempbuild
-wget https://s3-us-west-1.amazonaws.com/mojombo-codestarter/codestarter-tree.png
+wget https://s3-us-west-1.amazonaws.com/mojombo-codestarter/codestarter-tree.jpg
 cp codestarter-tree.png /usr/share/backgrounds
 echo "wallpaper.done"
 
@@ -95,7 +95,7 @@ natural-scroll=true\n\
 \n\
 [org.gnome.desktop.background]\n\
 \n\
-picture-uri='file:///usr/share/backgrounds/codestarter-tree.png'" > /usr/share/glib-2.0/schemas/codestarter.gschema.override
+picture-uri='file:///usr/share/backgrounds/codestarter-tree.jpg'" > /usr/share/glib-2.0/schemas/codestarter.gschema.override
 glib-compile-schemas /usr/share/glib-2.0/schemas/
 touch "dconf-overrides.done"
 
