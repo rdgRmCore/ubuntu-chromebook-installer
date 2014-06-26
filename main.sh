@@ -407,6 +407,9 @@ run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update"
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install oem-config"
 run_command_chroot "touch /var/lib/oem-config/run"
 
+log_msg "INFO" "Freeing up disk space"
+run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q clean"
+
 log_msg "INFO" "Removing Memtest from installation."
 run_command "sudo rm $system_chroot/boot/memtest86+*"
 
