@@ -80,8 +80,8 @@ touch "emacs.done"
 echo "Installing wallpaper"
 cd $tempbuild
 wget https://s3-us-west-1.amazonaws.com/mojombo-codestarter/codestarter-tree.jpg
-cp codestarter-tree.png /usr/share/backgrounds
-echo "wallpaper.done"
+cp codestarter-tree.jpg /usr/share/backgrounds
+touch "wallpaper.done"
 
 echo "Installing dconf overrides"
 cd $tempbuild
