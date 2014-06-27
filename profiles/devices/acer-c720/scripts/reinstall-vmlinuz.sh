@@ -28,4 +28,16 @@ if m:
     print int1+c1+int2+c2+int3+signed_int1+c3+word1
 END
 )
-sudo apt-get install --reinstall linux-image-3.13.0-29-generic
+mykernver=$(echo $mykern | cut -d'-' -f 1-2)
+
+echo "Installing latest kernel packages"
+sudo apt-get install -y linux-headers-$mykernver linux-headers-$mykern linux-image-$mykern linux-image-extra-$mykern
+
+# echo "Removing old kernel packages"
+# echo "uname -r = $(uname -r)"
+# old_kernel_pkgs=$(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')
+# echo "List of packages to be removed:"
+# echo "---"
+# echo $old_kernel_pkgs
+# echo "---"
+# echo $old_kernel_pkgs | xargs apt-get -y purge
