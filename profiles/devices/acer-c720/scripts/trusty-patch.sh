@@ -34,7 +34,7 @@ if m:
     print int1+c1+int2+c2+int3+signed_int1+c3+word1
 END
 )
-mykern=3.13.0-29-generic
+#mykern=3.13.0-23-generic
 mykernver=linux-$(echo $mykern | cut -d'-' -f 1)
 
 
@@ -42,11 +42,7 @@ mykernver=linux-$(echo $mykern | cut -d'-' -f 1)
 sudo apt-get build-dep -y --no-install-recommends linux-image-$mykern
 
 # Grab Ubuntu kernel source
-# apt-get source linux-image-$mykern
-current_dir="$(dirname $BASH_SOURCE)"
-src_file="$mykernver-29.tar.gz"
-echo "Using kernel source archive from $current_dir/$src_file"
-tar xzf $current_dir/$src_file
+apt-get source linux-image-$mykern
 cd $mykernver
 
 if [ -f drivers/platform/x86/chromeos_laptop.c ]; then
