@@ -87,7 +87,7 @@ echo "Installing dconf overrides"
 cd $tempbuild
 echo -e "[com.canonical.Unity.Launcher]\n\
 \n\
-favorites=['application://ubiquity.desktop', 'application://nautilus.desktop', 'application://google-chrome.desktop', 'application://sublime_text.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']
+favorites=['application://nautilus.desktop', 'application://google-chrome.desktop', 'application://sublime_text.desktop', 'application://gnome-terminal.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']
 \n\
 [org.gnome.settings-daemon.peripherals.touchpad]\n\
 \n\
