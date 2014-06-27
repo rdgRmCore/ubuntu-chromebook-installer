@@ -408,6 +408,7 @@ run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install
 run_command_chroot "touch /var/lib/oem-config/run"
 
 log_msg "INFO" "Freeing up disk space"
+run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q purge firefox"
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q clean"
 
 log_msg "INFO" "Removing Memtest from installation."
