@@ -345,9 +345,9 @@ log_msg "INFO" "Creating /etc/fstab..."
 echo -e "proc  /proc nodev,noexec,nosuid  0   0\nUUID=$system_partition_uuid  / ext4  noatime,nodiratime,errors=remount-ro  0   0\n/swap.img  none  swap  sw  0   0" > $tmp_dir/fstab
 run_command "sudo mv $tmp_dir/fstab $system_chroot/etc/fstab"
 
-log_msg "INFO" "Pinning Linux kernel"
-echo -e "Package: linux-generic linux-headers-generic linux-image-generic\nPin: version 3.13.0.30.36\nPin-Priority: 1001" > $tmp_dir/kernel_update_pinning
-run_command "sudo mv $tmp_dir/kernel_update_pinning $system_chroot/etc/apt/preferences.d/kernel_update_pinning"
+# log_msg "INFO" "Pinning Linux kernel"
+# echo -e "Package: linux-generic linux-headers-generic linux-image-generic\nPin: version 3.13.0.30.36\nPin-Priority: 1001" > $tmp_dir/kernel_update_pinning
+# run_command "sudo mv $tmp_dir/kernel_update_pinning $system_chroot/etc/apt/preferences.d/kernel_update_pinning"
 
 log_msg "INFO" "Adding 14.04 source repo..."
 run_command_chroot "echo -e 'deb-src http://archive.ubuntu.com/ubuntu/ trusty main restricted universe \ndeb-src http://archive.ubuntu.com/ubuntu/ trusty-security main restricted universe' |sudo tee -a /etc/apt/sources.list"
@@ -409,6 +409,13 @@ log_msg "INFO" "Enabling user and system configuration on first boot..."
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update"
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install oem-config"
 run_command_chroot "touch /var/lib/oem-config/run"
+
+log_msg "INFO" "Holding back the Linux kernel to prevent breaking custom kernel modules..."
+run_command_chroot "apt-mark hold linux-generic"
+run_command_chroot "apt-mark hold linux-image-generic"
+run_command_chroot "apt-mark hold linux-headers-generic"
+run_command_chroot "apt-mark hold linux-signed-generic"
+run_command_chroot "apt-mark hold linux-signed-image-generic"
 
 log_msg "INFO" "Freeing up disk space"
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q purge linux-headers-3.13.0-24 linux-headers-3.13.0-24-generic linux-image-3.13.0-24-generic linux-image-extra-3.13.0-24-generic linux-signed-image-3.13.0-24-generic"
