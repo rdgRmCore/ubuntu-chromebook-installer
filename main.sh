@@ -385,7 +385,7 @@ run_command "sudo mv $tmp_dir/hosts $system_chroot/etc/hosts"
 #Verification for the chroot scripts directory
 if [ -e "$chroot_dir_scripts" ];then
     log_msg "INFO" "Executing device scripts..."
-    for i in $(cd $chroot_dir_scripts; ls);do
+    for i in $(cd $chroot_dir_scripts; ls *.sh);do
         run_command_chroot "chmod a+x $scripts_dir/${i%%/}"
         run_command_chroot "/bin/bash -c $scripts_dir/${i%%/}"
     done
