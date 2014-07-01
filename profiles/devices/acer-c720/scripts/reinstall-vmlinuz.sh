@@ -31,13 +31,4 @@ END
 mykernver=$(echo $mykern | cut -d'-' -f 1-2)
 
 echo "Installing latest kernel packages"
-sudo apt-get install -y linux-headers-$mykernver linux-headers-$mykern linux-image-$mykern linux-image-extra-$mykern
-
-# echo "Removing old kernel packages"
-# echo "uname -r = $(uname -r)"
-# old_kernel_pkgs=$(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')
-# echo "List of packages to be removed:"
-# echo "---"
-# echo $old_kernel_pkgs
-# echo "---"
-# echo $old_kernel_pkgs | xargs apt-get -y purge
+sudo apt-get install -y linux-generic linux-signed-generic
