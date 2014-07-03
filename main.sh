@@ -156,6 +156,11 @@ done
 device_model="${BASH_ARGV[0]}"
 device_search="${BASH_ARGV[1]}"
 
+# Default to "acer-720" if no other args are sent
+if [ "$device_model" == "" ] && [ "$device_search" = "" ];then
+  device_model="acer-c720"
+fi
+
 if [ "$device_model" == "search" ];then
     debug_msg "WARNING" "No search critera entered for device profile search...exiting"
     usage
