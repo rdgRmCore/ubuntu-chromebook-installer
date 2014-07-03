@@ -437,6 +437,9 @@ run_command "sudo umount $system_chroot/sys"
 run_command "sudo umount $system_chroot/proc"
 run_command "sudo umount $system_chroot"
 
+run_command "rm $log_dir/*.log"
+run_command "rm $tmp_dir/*"
+
 log_msg "INFO" "(k)ubuntu installation completed. On first boot you will be asked to do the initial configuration for your system language, timezone, computer name and user account"
 log_msg "INFO" "Press [ENTER] to reboot..."
 read
