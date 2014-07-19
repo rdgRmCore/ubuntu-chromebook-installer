@@ -3,8 +3,8 @@
 
 #Variables definition
 #Script variables
-current_dir="$(dirname $BASH_SOURCE)"
-echo "Current dir = $current_dir"
+script_dir=`dirname "$BASH_SOURCE"`
+current_dir="."
 
 verbose=0
 kubuntu_toggle=0
