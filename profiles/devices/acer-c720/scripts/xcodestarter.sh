@@ -1,3 +1,7 @@
+# This script customizes the Acer C720 with Codestarter-specific programs and
+# settings. The 'x' that prefixes the script name ensures that this is the last
+# device script to be run.
+
 # Create a temp directory for our work
 tempbuild=`mktemp -d`
 
@@ -8,16 +12,26 @@ dpkg -i google-chrome-stable_current_amd64.deb
 export DEBIAN_FRONTEND=noninteractive; apt-get -f -y -q install
 touch "chrome.done"
 
+echo "Installing Scratch"
+cd $tempbuild
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install scratch
+touch "scratch.done"
+
 echo "Installing Sublime Text 3"
 cd $tempbuild
 wget http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3059_amd64.deb
 dpkg -i sublime-text_build-3059_amd64.deb
 touch "sublime.done"
 
-echo "Installing Scratch"
+echo "Installing Vim"
 cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install scratch
-touch "scratch.done"
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install vim
+touch "vim.done"
+
+echo "Installing Emacs"
+cd $tempbuild
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install emacs
+touch "emacs.done"
 
 echo "Installing ruby-install"
 cd $tempbuild
@@ -46,7 +60,7 @@ echo "chruby ruby-2.1.2" >> /etc/skel/.bashrc
 cd $tempbuild
 touch "chruby.done"
 
-echo "Installing node.js"
+echo "Installing node.js & npm"
 cd $tempbuild
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install nodejs npm
 touch "nodejs.done"
@@ -68,22 +82,16 @@ cd $tempbuild
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install git
 touch "git.done"
 
-echo "Installing Vim"
-cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install vim
-touch "vim.done"
-
-echo "Installing Emacs"
-cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install emacs
-touch "emacs.done"
-
 echo "Installing wallpaper"
 cd $tempbuild
 wget https://s3-us-west-1.amazonaws.com/mojombo-codestarter/codestarter-tree.jpg
 cp codestarter-tree.jpg /usr/share/backgrounds
 touch "wallpaper.done"
 
+# These dconf overrides do the following:
+# 1. Customizes the Launcher (left dock bar) to hold commonly used programs.
+# 2. Sets trackpad scrolling to "natural" (same as default on OSX).
+# 3. Sets the desktop background to custom Codestarter wallpaper.
 echo "Installing dconf overrides"
 cd $tempbuild
 echo -e "[com.canonical.Unity.Launcher]\n\
