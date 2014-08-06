@@ -1,14 +1,20 @@
-Ubuntu OS installation script for Chromebooks
-============================================
+Codestarter installer for Ubuntu on Chromebooks
+===============================================
 
-This will install Ubuntu or Kubuntu (with ChrUbuntu) and apply automatically all the necessary fixes to run Ubuntu on Chromebooks. You will be able to boot in ChromeOS or Ubuntu on your Chromebook.
+This script will install everything necessary to transform an Acer C720 into a
+Codestarter laptop. Primarily this involves partitioning the built-in SSD and
+installing Ubuntu along with various patches and Codestarter customizations.
+
+Upon completion, you will be able to boot into both ChromeOS (CTRL-D) or Ubuntu
+(CTRL-L) from the developer mode boot screen.
+
+For more back story on why we chose the Acer C720 and some of the Codestarter
+customizations, see our blog post at http://bit.ly/X24d9r.
 
 Supported device(s)
 -------------------
 
-* Acer C720 (Tested)
-* HP Chromebook 14 (Untested, but should work using the Acer C720 device profile)
-* Asus Panther Chromebox (Tested)
+* Acer C720 Chromebook
 
 Prerequisites
 -------------
@@ -24,20 +30,17 @@ Usage
 
 **ATTENTION: This will wipe everything on your device**
 
-**ATTENTION: This is still a pre-release, there could be bugs**
-
 1. Enable [developer mode](http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices) on your device
-2. Download the latest pre-release of this installer and extract it to a removable media
+2. Download the latest version of this installer and extract it to a removable media
 3. Boot into ChromeOS, connect to a wireless network and log in as guest
 4. Open a shell (CTRL + ALT + t) and type `shell`
 5. From the shell go to the location of the script on the removable media `cd /media/removable/` and press **[TAB] [TAB]** on your keyboard to show and auto-complete your removable media path automatically
-6. Run the script with the `list` parameter to list the supported device(s) `sudo bash main.sh list` or the `search` parameter to search in all devices profile(s) `sudo bash main.sh search DEVICE_PROFILE` (ex: sudo bash main.sh search acer)
-7. Run the script with the appropriate manifest for your device `sudo bash main.sh DEVICE_PROFILE` (ex: sudo bash main.sh acer-c720)
-8. On the first run you will be asked how much storage space you want to dedicate to Ubuntu
-9. After the first run, your system will reboot to complete the initial formating, then you will need to re-run the script with the same parameters to complete the installation process
-10. Follow the prompt to complete the installation
-11. After the installation is completed and the Chromebook has rebooted, press CTRL+L to boot into Ubuntu
-12. On first boot you will be asked to complete your system configuration (Language, Time zone, Computer name) and create a user account
+6. Run the script with `sudo bash main.sh`
+7. On the first run you will be asked how much storage space you want to dedicate to Ubuntu. We suggest choosing the default.
+8. After the first run, your system will reboot to complete the initial formatting, then you will need to re-run the script (steps 3-6) to complete the installation process
+9. Follow the prompt to complete the installation
+10. After the installation is completed and the Chromebook has rebooted, press CTRL+L to boot into Ubuntu
+11. On first boot you will be asked to complete your system configuration (Language, Time zone, Computer name) and create a user account
 
 Credit(s)
 ---------
