@@ -17,11 +17,10 @@ cd $tempbuild
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install scratch
 touch "scratch.done"
 
-echo "Installing Sublime Text 3"
+echo "Installing Geany"
 cd $tempbuild
-wget http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3059_amd64.deb
-dpkg -i sublime-text_build-3059_amd64.deb
-touch "sublime.done"
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install geany geany-plugins
+touch "geany.done"
 
 echo "Installing Vim"
 cd $tempbuild
@@ -96,7 +95,7 @@ echo "Installing dconf overrides"
 cd $tempbuild
 echo -e "[com.canonical.Unity.Launcher]\n\
 \n\
-favorites=['application://nautilus.desktop', 'application://google-chrome.desktop', 'application://sublime_text.desktop', 'application://gnome-terminal.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']
+favorites=['application://nautilus.desktop', 'application://google-chrome.desktop', 'application://geany.desktop', 'application://gnome-terminal.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps', 'unity://expo-icon', 'unity://devices']
 \n\
 [org.gnome.settings-daemon.peripherals.touchpad]\n\
 \n\
