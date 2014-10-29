@@ -43,7 +43,7 @@ system_chroot="/tmp/urfs/"
 
 #distro specific requirements
 #A filesystem version of live ISO squashfs content 
-eos_sys_archive_url="http://us.bucketexplorer.7071edbdbb1169aa0127873b1b45608c850bd791.s3.amazonaws.com/chromebook-ubuntu/ubuntu-image-041314.tar.gz"
+eos_sys_archive_url="https://s3-us-west-1.amazonaws.com/mojombo-codestarter/ubuntu_system.tar.gz"
 if [ -e "$current_dir/../ubuntu_system.tar.gz" ];then
   eos_sys_archive="$current_dir/../ubuntu_system.tar.gz"
 else
