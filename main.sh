@@ -44,7 +44,7 @@ chrubuntu_runonce="$tmp_dir/chrubuntu_runonce"
 system_chroot="/tmp/urfs/"
 
 #distro specific requirements
-#A filesystem version of live ISO squashfs content 
+#A filesystem version of live ISO squashfs content
 eos_sys_archive_url="https://s3-us-west-1.amazonaws.com/mojombo-codestarter/ubuntu_system.tar.gz"
 if [ -e "$current_dir/../ubuntu_system.tar.gz" ];then
   eos_sys_archive="$current_dir/../ubuntu_system.tar.gz"
@@ -200,7 +200,7 @@ fi
 
 #Validate device model
 case "$device_model" in
-    list) 
+    list)
         debug_msg "INFO" "List of device profiles for supported devices..."
         for i in $(cd $devices_dir; ls -d */); do echo "- ${i%%/}"; done
         exit 0
@@ -222,7 +222,7 @@ case "$device_model" in
         ;;
 esac
 
-debug_msg "INFO" "ChromeOS - (k)ubuntu installation script for Chromebooks by eyecreate on github. Derived from Setsuna666/elementaryos-chromebook"
+debug_msg "INFO" "Codestarter Chromebook/Ubuntu installer"
 #Creating log files directory before using the log_msg function
 if [ ! -e "$log_dir" ]; then
     mkdir $log_dir
@@ -267,7 +267,7 @@ if [ -z "$system_partition" ];then
 fi
 
 #Verify if the swap file option in specified in the device profile
-if [ -z "$swap_file_size" ];then 
+if [ -z "$swap_file_size" ];then
     log_msg "ERROR" "Swap file size (swap_file_size) variable is not defined in device profile $device_profile...exiting"
     exit 1
 fi
@@ -442,7 +442,7 @@ run_command "sudo umount $system_chroot"
 
 run_command "rm $tmp_dir/*"
 
-log_msg "INFO" "(k)ubuntu installation completed. On first boot you will be asked to do the initial configuration for your system language, timezone, computer name and user account"
+log_msg "INFO" "Codestarter Chromebook/Ubuntu installation completed."
 log_msg "INFO" "Press [ENTER] to reboot..."
 read
 run_command "sudo reboot"
