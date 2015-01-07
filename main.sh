@@ -7,6 +7,9 @@ script_dir=`dirname "$BASH_SOURCE"`
 current_dir="."
 
 verbose=0
+set_user=""
+set_pass="codestarter"
+no_part=false
 
 #Script global directory variables
 log_file="ubuntu-install.log"
@@ -54,12 +57,15 @@ eos_sys_archive_md5="2a14cd56e0e116e921b064ee2959280a"
 usage(){
 cat << EOF
 usage: $0 [ OPTIONS ] [ DEVICE_PROFILE | ACTION ]
-      
+
 ChromeOS - Ubuntu installation script for Chromebooks
 
     OPTIONS:
-    -h      Show help
-    -v      Enable verbose mode
+    -h           Show help
+    -v           Enable verbose mode
+    -u USERNAME  Create a default user with this name and password "codestarter".
+    -p PASSWORD  If a user is specified, use this password instead of default.
+    -n           Do not run the partitioning step (useful for repeated installs).
 
     DEVICE_PROFILE:
         The device profile to load for your Chromebook
@@ -130,7 +136,7 @@ run_command_chroot(){
 #Required arguments
 
 #Optional arguments
-while getopts "hvk" option; do
+while getopts ":hvu:p:n" option; do
     case $option in
         h)
             usage
@@ -139,15 +145,36 @@ while getopts "hvk" option; do
         v)
             verbose=1
             ;;
-        ?)
-            usage
+        u)
+            set_user=$OPTARG
+            ;;
+        p)
+            if [ "$set_user" == "" ];then
+              echo "Option -p requires option -u to be specified first." >&2
+              exit 1
+            fi
+            set_pass=$OPTARG
+            ;;
+        n)
+            no_part=true
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
             exit 1
             ;;
     esac
 done
 
-device_model="${BASH_ARGV[0]}"
-device_search="${BASH_ARGV[1]}"
+# Move the index past the options
+shift $((OPTIND-1))
+
+device_model="$1"
+shift
+device_search="$1"
 
 # Default to "acer-720" if no other args are sent
 if [ "$device_model" == "" ] && [ "$device_search" = "" ];then
@@ -210,7 +237,7 @@ if [ ! -e "$tmp_dir" ]; then
     run_command "mkdir $tmp_dir"
 fi
 
-if [ ! -e "$chrubuntu_runonce" ]; then
+if [ $no_part == false ] && [ ! -e "$chrubuntu_runonce" ]; then
     log_msg "INFO" "Running ChrUbuntu to setup partitioning..."
     sudo bash $chrubuntu_script
     log_msg "INFO" "ChrUbuntu execution complete..."
@@ -373,10 +400,21 @@ run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q remove 
 run_command_chroot "rm -rf /tmp/*"
 run_command_chroot "chmod -R 777 /tmp/"
 
-log_msg "INFO" "Enabling user and system configuration on first boot..."
-run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update"
-run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install oem-config"
-run_command_chroot "touch /var/lib/oem-config/run"
+if [ "$set_user" == "" ];then
+  # No user specified on command line, set up system to run configuration on
+  # first boot.
+  log_msg "INFO" "Enabling user and system configuration on first boot..."
+  run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update"
+  run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install oem-config"
+  run_command_chroot "touch /var/lib/oem-config/run"
+else
+  # A user was specified on the command line, set it up.
+  log_msg "INFO" "Configuring default user: $set_user..."
+  run_command_chroot "useradd -m $set_user -s /bin/bash"
+  run_command_chroot "echo $set_user:$set_pass | chpasswd"
+  run_command_chroot "adduser $set_user adm"
+  run_command_chroot "adduser $set_user sudo"
+fi
 
 log_msg "INFO" "Freeing up disk space"
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q purge linux-headers-3.13.0-24 linux-headers-3.13.0-24-generic linux-image-3.13.0-24-generic linux-image-extra-3.13.0-24-generic linux-signed-image-3.13.0-24-generic"
