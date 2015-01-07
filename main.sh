@@ -385,13 +385,6 @@ run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q purge g
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q purge thunderbird"
 run_command_chroot "export DEBIAN_FRONTEND=noninteractive; apt-get -y -q clean"
 
-log_msg "INFO" "Holding back the Linux kernel to prevent breaking custom kernel modules..."
-run_command_chroot "apt-mark hold linux-generic"
-run_command_chroot "apt-mark hold linux-image-generic"
-run_command_chroot "apt-mark hold linux-headers-generic"
-run_command_chroot "apt-mark hold linux-signed-generic"
-run_command_chroot "apt-mark hold linux-signed-image-generic"
-
 log_msg "INFO" "Removing Memtest from installation."
 run_command "sudo rm $system_chroot/boot/memtest86+*"
 
