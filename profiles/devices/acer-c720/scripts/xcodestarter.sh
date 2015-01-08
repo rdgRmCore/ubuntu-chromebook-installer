@@ -107,5 +107,17 @@ picture-uri='file:///usr/share/backgrounds/codestarter-tree.jpg'" > /usr/share/g
 glib-compile-schemas /usr/share/glib-2.0/schemas/
 touch "dconf-overrides.done"
 
+# Add registration shortcut to desktop
+serial=$(cat /etc/serialnumber)
+mkdir -p /etc/skel/Desktop
+cat <<EOF > /etc/skel/Desktop/register.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Name=Register your Codestarter Laptop
+Type=Link
+URL=https://codestarter.org/start?serial=$serial
+Icon=register-48
+EOF
+
 # Cleanup
 rm -fr /tmp/tmp.*

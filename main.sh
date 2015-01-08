@@ -335,6 +335,11 @@ run_command "sudo mount -o bind /dev/pts $system_chroot/dev/pts"
 run_command "sudo mount -o bind /sys/ $system_chroot/sys/"
 run_command "sudo mount -o bind /proc/ $system_chroot/proc/"
 
+log_msg "INFO" "Recording device serial number..."
+serial=$(/usr/sbin/dump_vpd_log --full --stdout | grep '"serial_number"' | sed -E 's/^"serial_number"="(.+)"$/\1/')
+echo -e "$serial" > $tmp_dir/serialnumber
+run_command "sudo mv $tmp_dir/serialnumber $system_chroot/etc/serialnumber"
+
 log_msg "INFO" "Creating /etc/resolv.conf..."
 echo -e "nameserver 208.67.222.123\nnameserver 208.67.220.123" > $tmp_dir/resolv.conf
 run_command "sudo mv $tmp_dir/resolv.conf $system_chroot/etc/resolv.conf"
