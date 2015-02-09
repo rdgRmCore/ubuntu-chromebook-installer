@@ -12,25 +12,22 @@ dpkg -i google-chrome-stable_current_amd64.deb
 export DEBIAN_FRONTEND=noninteractive; apt-get -f -y -q install
 touch "chrome.done"
 
-echo "Installing Scratch"
-cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install scratch
-touch "scratch.done"
-
-echo "Installing Geany"
-cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install geany geany-plugins
-touch "geany.done"
-
 echo "Installing Vim"
 cd $tempbuild
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install vim
 touch "vim.done"
 
-echo "Installing Emacs"
+echo "Installing gvim"
 cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install emacs
-touch "emacs.done"
+export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install vim-gnome
+touch "gvim.done"
+
+echo "Installing 32 bit support"
+cd $tempbuild
+export DEBIAN_FRONTEND=noninteractive;dpkg --add-architecture i386
+export DEBIAN_FRONTEND=noninteractive;apt-get update
+export DEBIAN_FRONTEND=noninteractive;apt-get -y -q install libc6:i386 libncurses5:i386 libstdc++6:i386
+touch "32bit.done"
 
 echo "Installing ruby-install"
 cd $tempbuild
@@ -69,55 +66,10 @@ cd $tempbuild
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install default-jdk
 touch "java.done"
 
-echo "Installing Minecraft"
-cd $tempbuild
-export DEBIAN_FRONTEND=noninteractive; add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q update
-export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install minecraft-installer
-touch "minecraft.done"
-
 echo "Installing Git"
 cd $tempbuild
 export DEBIAN_FRONTEND=noninteractive; apt-get -y -q install git
 touch "git.done"
-
-echo "Installing wallpaper"
-cd $tempbuild
-wget https://s3-us-west-1.amazonaws.com/mojombo-codestarter/codestarter-tree.jpg
-cp codestarter-tree.jpg /usr/share/backgrounds
-touch "wallpaper.done"
-
-# These dconf overrides do the following:
-# 1. Customizes the Launcher (left dock bar) to hold commonly used programs.
-# 2. Sets trackpad scrolling to "natural" (same as default on OSX).
-# 3. Sets the desktop background to custom Codestarter wallpaper.
-echo "Installing dconf overrides"
-cd $tempbuild
-echo -e "[com.canonical.Unity.Launcher]\n\
-\n\
-favorites=['application://nautilus.desktop', 'application://google-chrome.desktop', 'application://geany.desktop', 'application://gnome-terminal.desktop', 'application://minecraft.desktop', 'application://ubuntu-software-center.desktop', 'application://unity-control-center.desktop', 'unity://running-apps']
-\n\
-[org.gnome.settings-daemon.peripherals.touchpad]\n\
-\n\
-natural-scroll=true\n\
-\n\
-[org.gnome.desktop.background]\n\
-\n\
-picture-uri='file:///usr/share/backgrounds/codestarter-tree.jpg'" > /usr/share/glib-2.0/schemas/codestarter.gschema.override
-glib-compile-schemas /usr/share/glib-2.0/schemas/
-touch "dconf-overrides.done"
-
-# Add registration shortcut to desktop
-serial=$(cat /etc/serialnumber)
-mkdir -p /etc/skel/Desktop
-cat <<EOF > /etc/skel/Desktop/register.desktop
-[Desktop Entry]
-Encoding=UTF-8
-Name=Register your Codestarter Laptop
-Type=Link
-URL=https://codestarter.org/start?serial=$serial
-Icon=register-48
-EOF
 
 # Cleanup
 rm -fr /tmp/tmp.*
